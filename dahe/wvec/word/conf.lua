@@ -1,0 +1,11 @@
+starterate=1000000--warning:only used as init erate, not asigned to criterion
+ieps=8
+warmcycle=8
+expdecaycycle=4
+gtraincycle=64
+modlr=0.5
+csave=3
+nfeature=256*2
+nhidden=nfeature
+nclass=256
+lrdecaycycle=8
