@@ -1,7 +1,7 @@
 local maskZerovecLookup, parent = torch.class('nn.maskZerovecLookup', 'nn.vecLookup')
 
-function maskZerovecLookup:__init(vecin, paddingValue, maxNorm, normType)
-	parent.__init(self, torch.cat(torch.Tensor(1,vecin:size(2)):zero():typeAs(vecin),vecin,1), paddingValue, maxNorm, normType)
+function maskZerovecLookup:__init(vecin, dontupdatevec, paddingValue, maxNorm, normType)
+	parent.__init(self, torch.cat(torch.Tensor(1,vecin:size(2)):zero():typeAs(vecin),vecin,1), dontupdatevec, paddingValue, maxNorm, normType)
 end
 
 function maskZerovecLookup:updateOutput(input)

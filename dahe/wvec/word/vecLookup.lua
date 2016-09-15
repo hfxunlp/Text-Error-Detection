@@ -4,7 +4,7 @@ local vecLookup, parent = torch.class('nn.vecLookup', 'nn.Module')
 
 vecLookup.__version = 4
 
-function vecLookup:__init(vecin, updatevec, paddingValue, maxNorm, normType)
+function vecLookup:__init(vecin, dontupdatevec, paddingValue, maxNorm, normType)
 	parent.__init(self)
 
 	self.weight = vecin
@@ -12,7 +12,7 @@ function vecLookup:__init(vecin, updatevec, paddingValue, maxNorm, normType)
 	self.paddingValue = paddingValue or 0
 	self.maxNorm = maxNorm or nil
 	self.normType = normType or nil
-	self.updatevec = updatevec
+	self.updatevec = not dontupdatevec
 end
 
 function vecLookup:backCompatibility()
