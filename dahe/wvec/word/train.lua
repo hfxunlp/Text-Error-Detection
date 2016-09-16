@@ -44,14 +44,6 @@ erate=0
 storemini=1
 minerrate=starterate
 
-print("load packages")
-require "nn"
-require "rnn"
-require "SeqBGRU"
-require "dpnn"
-require "vecLookup"
-require "maskZerovecLookup"
-
 function train()
 
 	print("design neural networks and criterion")
@@ -62,23 +54,31 @@ function train()
 	nnmod:training()
 
 	local critmod=getcrit()
-	
-	local gtar=nn.Sequential():add(nnmod:get(1)):add(nn.SplitTable(1))
 
 	print("init train")
 	local epochs=1
 	local lr=modlr
 	local cupd=nil
 	local culen=nil
+	local tar=nil
+	local tart=nil
 	collectgarbage()
 
 	print("start pre train")
+
+	nnmod:get(1):get(1):get(1).updatevec=false
+
 	for tmpi=1,warmcycle do
 		for tmpj=1,ieps do
 			for curpot=1,nsam do
 				cupd=mword[curpot]
 				culen=cupd:size(1)-1
-				gradUpdate(nnmod,{cupd:narrow(1,1,culen),gtar:forward(cupd:narrow(1,2,culen))},1,critmod,lr)
+				tart=torch.Tensor(cupd:size(2)):fill(1)
+				tar={}
+				for _i=1,culen do
+					table.insert(tar,tart)
+				end
+				gradUpdate(nnmod,{cupd:narrow(1,1,culen),cupd:narrow(1,2,culen)},tar,critmod,lr)
 			end
 		end
 		local erate=sumErr/eaddtrain
@@ -87,6 +87,8 @@ function train()
 		sumErr=0
 		epochs=epochs+1
 	end
+
+	nnmod:get(1):get(1):get(1).updatevec=true
 
 	epochs=1
 	icycle=1
@@ -99,7 +101,14 @@ function train()
 		for innercycle=1,gtraincycle do
 			for tmpi=1,ieps do
 				for curpot=1,nsam do
-					gradUpdate(nnmod,mword[curpot],mwordt[curpot],critmod,lr)
+					cupd=mword[curpot]
+					culen=cupd:size(1)-1
+					tart=torch.Tensor(cupd:size(2)):fill(1)
+						tar={}
+					for _i=1,culen do
+						table.insert(tar,tart)
+					end
+					gradUpdate(nnmod,{cupd:narrow(1,1,culen),cupd:narrow(1,2,culen)},tar,critmod,lr)
 				end
 			end
 			local erate=sumErr/eaddtrain
