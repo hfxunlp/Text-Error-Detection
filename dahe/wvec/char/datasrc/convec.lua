@@ -46,10 +46,10 @@ function gvec(nvec,vecsize,frs)
 	file:close()
 end
 
-convec("wvec.txt","wvec.asc",256)
+convec("wvec.txt","wvec.asc",512)
 
-for nf=1,1867 do
-	convfile("duse/btoken"..nf.."i.txt","thd/train"..nf.."i.asc",true)
+for nf=1,178558 do
+	convfile("duse/rmrb"..nf.."i.txt","thd/train"..nf.."i.asc",true)
 end
 
 --convfile("trainer.txt","traineg.asc",3,true)
