@@ -1,30 +1,6 @@
 print("set default tensor type to float")
 torch.setdefaulttensortype('torch.FloatTensor')
 
-function gradUpdate(mlpin, x, y, criterionin, learningRate)
-	local pred=mlpin:forward(x)
-	local err=criterionin:forward(pred, y)
-	sumErr=sumErr+err
-	local gradCriterion=criterionin:backward(pred, y)
-	mlpin:zeroGradParameters()
-	mlpin:backward(x, gradCriterion)
-	mlpin:updateGradParameters(0.875)
-	mlpin:updateParameters(learningRate)
-	mlpin:maxParamNorm(-1)
-end
-
-function saveObject(fname,objWrt,forwls)
-	if not torch.isTensor(objWrt) then
-		if forwls then
-			objWrt:forward(lmodi)
-		end
-		objWrt:lightSerial()
-	end
-	local file=torch.DiskFile(fname,'w')
-	file:writeObject(objWrt)
-	file:close()
-end
-
 print("load settings")
 require"conf"
 
@@ -38,10 +14,14 @@ storemini=1
 minerrate=starterate
 
 function train()
+	require "trapi"
+	require "sapi"
 
 	print("design neural networks and criterion")
 	require "designn"
 	local nnmod=getnn()
+
+	local lmodi,bwdc=unpack(glmodi(nnmod))
 
 	print(nnmod)
 	nnmod:training()
@@ -103,7 +83,7 @@ function train()
 				minerrate=erate
 				aminerr=0
 				print("new minimal error found,save model")
-				saveObject("modrs/nnmod"..storemini..".asc",nnmod,true)
+				saveObject("modrs/nnmod"..storemini..".asc",nnmod,lmodi,bwdc)
 				storemini=storemini+1
 				if storemini>csave then
 					storemini=1
@@ -129,7 +109,7 @@ function train()
 		end
 
 		print("save neural network trained")
-		saveObject("modrs/nnmod.asc",nnmod,true)
+		saveObject("modrs/nnmod.asc",nnmod,lmodi,bwdc)
 
 		print("save criterion history trained")
 		local critensor=torch.Tensor(crithis)

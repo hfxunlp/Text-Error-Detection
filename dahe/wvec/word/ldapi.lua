@@ -67,7 +67,7 @@ function rldc()
 		table.insert(mword,table.remove(apin))
 		table.remove(mwordt,1)
 		table.insert(mwordt,table.remove(aptar))
-		colid[table.remove(colidx,1)]=nil
+		table.remove(colid,table.remove(colidx,1))
 	end
 end
 
@@ -76,19 +76,18 @@ function rldt()
 	collectgarbage()
 end
 
-function glmodi()
+function glmodi(modin)
+	local rt=nil
 	local ti=mword[1]
 	local tif=ti:narrow(1,1,1)
 	local til=ti:narrow(1,2,1)
 	tif=tif:narrow(2,1,1):clone()
 	til=til:narrow(2,1,1):clone()
-	return {tif:zero(),til:zero()}
+	local _trt={tif:zero(),til:zero()}
+	if modin then
+		rt={_trt,modin:forward(_trt)}
+	else
+		rt=_trt
+	end
+	return rt
 end
-
-wvec=loadObject('datasrc/wvec.asc')
-sizvec=wvec:size(2)
-
-colid={}
-colidx={}
-mword,mwordt=loadnt('datasrc/thd/train','i.asc',tld,nsam)
-lmodi=glmodi()
