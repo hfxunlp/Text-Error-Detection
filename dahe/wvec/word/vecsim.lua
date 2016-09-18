@@ -1,6 +1,6 @@
 require "nn"
 require "rnn"
-require "SeqBGRU"
+require "SeqBLMGRU"
 require "dpnn"
 require "vecLookup"
 require "maskZerovecLookup"
@@ -11,9 +11,7 @@ function getnn()
 	local id2vec=nn.maskZerovecLookup(wvec);
 	wvec=nil
 
-	local coremod=nn.SeqBGRU(sizvec,nfeature);
-	coremod.maskzero=true
-	--coremod.batchfirst=true	
+	local coremod=nn.SeqBLMGRU(sizvec,nfeature,true);
 
 	local clsmod=nn.Sequencer(nn.MaskZero(nn.Sequential():add(nn.Linear(nfeature,nhidden)):add(nn.Tanh()):add(nn.Linear(nhidden,nclass)),1));
 

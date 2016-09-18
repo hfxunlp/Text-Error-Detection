@@ -44,7 +44,7 @@ function train()
 		for _tmpi=1,pdcycle do
 			for k,v in ipairs(mword) do
 				culen=v:size(1)-1
-				gradUpdate(nnmod,{v:narrow(1,1,culen),v:narrow(1,2,culen)},mwordt[k],critmod,lr)
+				gradUpdate(nnmod,{v,v},mwordt[k],critmod,lr)
 			end
 		end
 		local erate=sumErr/eatrain
@@ -73,7 +73,7 @@ function train()
 			for _tmpi=1,pdcycle do
 				for k,v in ipairs(mword) do
 					culen=v:size(1)-1
-					gradUpdate(nnmod,{v:narrow(1,1,culen),v:narrow(1,2,culen)},mwordt[k],critmod,lr)
+					gradUpdate(nnmod,{v,v},mwordt[k],critmod,lr)
 				end
 			end
 			local erate=sumErr/eatrain

@@ -1,4 +1,4 @@
-starterate=1000000--warning:only used as init erate, not asigned to criterion
+starterate=2
 warmcycle=16
 pdcycle=4
 nsam=1867
