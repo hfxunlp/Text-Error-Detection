@@ -51,10 +51,3 @@ convec("wvec.txt","wvec.asc",256)
 for nf=1,1867 do
 	convfile("duse/btoken"..nf.."i.txt","thd/train"..nf.."i.asc",true)
 end
-
---convfile("trainer.txt","traineg.asc",3,true)
---convfile("tester.txt","testeg.asc",3,true)
---convfile("dever.txt","deveg.asc",3,true)
---do not forget unk
---gvec(4772,128,"vrvec.asc")
---gvec(44778,128,"nrvec.asc")

@@ -16,7 +16,7 @@ function convec(fsrc,frs,lsize)
 	file:close()
 end
 
-function convfile(fsrc,frs,useint)
+function convfile(fsrc,frs,uselong)
 	local file=io.open(fsrc)
 	local lind=file:read("*n")
 	local num=file:read("*n")
@@ -30,8 +30,8 @@ function convfile(fsrc,frs,useint)
 		table.insert(rs,tmpt)
 	end
 	file:close()
-	if useint then
-		ts=torch.IntTensor(rs)
+	if uselong then
+		ts=torch.LongTensor(rs)
 	else
 		ts=torch.Tensor(rs)
 	end
@@ -51,10 +51,3 @@ convec("wvec.txt","wvec.asc",512)
 for nf=1,178558 do
 	convfile("duse/rmrb"..nf.."i.txt","thd/train"..nf.."i.asc",true)
 end
-
---convfile("trainer.txt","traineg.asc",3,true)
---convfile("tester.txt","testeg.asc",3,true)
---convfile("dever.txt","deveg.asc",3,true)
---do not forget unk
---gvec(4772,128,"vrvec.asc")
---gvec(44778,128,"nrvec.asc")
