@@ -16,7 +16,7 @@ function convec(fsrc,frs,lsize)
 	file:close()
 end
 
-function convfile(fsrc,frs,useint)
+function convfile(fsrc,frs,uselong)
 	local file=io.open(fsrc)
 	local lind=file:read("*n")
 	local num=file:read("*n")
@@ -30,8 +30,8 @@ function convfile(fsrc,frs,useint)
 		table.insert(rs,tmpt)
 	end
 	file:close()
-	if useint then
-		ts=torch.IntTensor(rs)
+	if uselong then
+		ts=torch.LongTensor(rs)
 	else
 		ts=torch.Tensor(rs)
 	end

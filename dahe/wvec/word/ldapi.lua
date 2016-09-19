@@ -5,31 +5,6 @@ function loadObject(fname)
 	return objRd
 end
 
-function loadSeqTensor(fname)
-	local file=io.open(fname)
-	local lind=file:read("*n")
-	local rs={}
-	local num=file:read("*n")
-	while num do
-		local tmpt={}
-		for i=1,lind do
-			table.insert(tmpt,num)
-			num=file:read("*n")
-		end
-		table.insert(rs,torch.Tensor(tmpt))
-	end
-	file:close()
-	return rs
-end
-
-function loadTrain(iprefix,ifafix,nfile)
-	local id={}
-	for i=1,nfile do
-		table.insert(id,loadObject(iprefix..i..ifafix))
-	end
-	return id
-end
-
 function loadnt(iprefix,ifafix,nfile,ntotal)
 	local id={}
 	local rtar={}
