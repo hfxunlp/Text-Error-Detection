@@ -32,19 +32,17 @@ function train()
 	local epochs=1
 	local lr=modlr
 	local eatrain=pdcycle*tld
-	local culen=nil
 	collectgarbage()
 
 	print("start pre train")
 
-	nnmod:get(1):get(1):get(1).updatevec=false
+	updvec(nnmod,false)
 
 	for tmpi=1,warmcycle do
 		io.write("epoch:"..tostring(epochs)..",lr:"..lr)
 		for _tmpi=1,pdcycle do
 			for k,v in ipairs(mword) do
-				culen=v:size(1)-1
-				gradUpdate(nnmod,{v,v},mwordt[k],critmod,lr)
+				gradUpdate(nnmod,v,mwordt[k],critmod,lr)
 			end
 		end
 		local erate=sumErr/eatrain
@@ -58,7 +56,7 @@ function train()
 		end
 	end
 
-	nnmod:get(1):get(1):get(1).updatevec=true
+	updvec(nnmod,true)
 
 	epochs=1
 	icycle=1
@@ -72,8 +70,7 @@ function train()
 			io.write("epoch:"..tostring(epochs)..",lr:"..lr)
 			for _tmpi=1,pdcycle do
 				for k,v in ipairs(mword) do
-					culen=v:size(1)-1
-					gradUpdate(nnmod,{v,v},mwordt[k],critmod,lr)
+					gradUpdate(nnmod,v,mwordt[k],critmod,lr)
 				end
 			end
 			local erate=sumErr/eatrain

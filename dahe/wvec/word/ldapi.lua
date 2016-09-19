@@ -72,11 +72,10 @@ end
 function glmodi(modin)
 	local rt=nil
 	local tidf=torch.zeros(2,1)
-	local _trt={tidf,tidf}
 	if modin then
-		rt={_trt,modin:forward(_trt)}
+		rt={tidf,modin:forward(tidf)}
 	else
-		rt=_trt
+		rt=tidf
 	end
 	return rt
 end

@@ -7,22 +7,24 @@
 -- and applies a backward rnn in reverse order.
 -- Reversal of the sequence happens on the time dimension.
 ------------------------------------------------------------------------
-local SeqBLMGRU, parent = torch.class('nn.SeqBLMGRU', 'nn.Module')
+local SeqBLMGRU, parent = torch.class('nn.SeqBLMGRU', 'nn.Container')
 
 function SeqBLMGRU:__init(inputDim, hiddenDim, maskzero)
-	self.forwardModule = nn.SeqGRU(inputDim, hiddenDim)
 
-	self.backwardModule = nn.Sequential()
-		:add(nn.SeqReverseSequence(1)) -- reverse
-		:add(nn.SeqGRU(inputDim, hiddenDim))
-		:add(nn.SeqReverseSequence(1)) -- unreverse
+	parent.__init(self)
+
+	self.forwardModule = nn.SeqGRU(inputDim, hiddenDim)
 
 	if maskzero then
 		self.forwardModule.maskzero=true
-		self.backwardModule:get(2).maskzero=true
 	end
 
-	parent.__init(self)
+	self.backwardModule = nn.Sequential()
+		:add(nn.SeqReverseSequence(1)) -- reverse
+		:add(self.forwardModule:clone())
+		:add(nn.SeqReverseSequence(1)) -- unreverse
+
+	self.modules={self.forwardModule,self.backwardModule}
 
 end
 
