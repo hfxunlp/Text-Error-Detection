@@ -1,12 +1,12 @@
-function saveObject(fname,objWrt,lmodi,bwdc)
+function saveObject(fname,objWrt)
+	local tmpod=nil
 	if not torch.isTensor(objWrt) then
-		if lmodi then
-			objWrt:forward(lmodi)
-			objWrt:updateGradInput(lmodi,bwdc)
-		end
-		objWrt:lightSerial()
+		tmpod=nn.Serial(objWrt)
+		tmpod:lightSerial()
+	else
+		tmpod=objWrt
 	end
 	local file=torch.DiskFile(fname,'w')
-	file:writeObject(objWrt)
+	file:writeObject(tmpod)
 	file:close()
 end

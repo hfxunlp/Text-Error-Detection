@@ -43,14 +43,3 @@ function rldt()
 	rldc()
 	collectgarbage()
 end
-
-function glmodi(modin)
-	local rt=nil
-	local tidf=torch.zeros(2,1)
-	if modin then
-		rt={tidf,modin:forward(tidf)}
-	else
-		rt=tidf
-	end
-	return rt
-end

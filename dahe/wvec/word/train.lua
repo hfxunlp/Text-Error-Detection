@@ -21,8 +21,6 @@ function train()
 	require "designn"
 	local nnmod=getnn()
 
-	local lmodi,bwdc=unpack(glmodi(nnmod))
-
 	print(nnmod)
 	nnmod:training()
 
@@ -80,7 +78,7 @@ function train()
 				minerrate=erate
 				aminerr=0
 				print("new minimal error found,save model")
-				saveObject("modrs/nnmod"..storemini..".asc",nnmod,lmodi,bwdc)
+				saveObject("modrs/nnmod"..storemini..".asc",nnmod)
 				storemini=storemini+1
 				if storemini>csave then
 					storemini=1
@@ -106,7 +104,7 @@ function train()
 		end
 
 		print("save neural network trained")
-		saveObject("modrs/nnmod.asc",nnmod,lmodi,bwdc)
+		saveObject("modrs/nnmod.asc",nnmod)
 
 		print("save criterion history trained")
 		local critensor=torch.Tensor(crithis)

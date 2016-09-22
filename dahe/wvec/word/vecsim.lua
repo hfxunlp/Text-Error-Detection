@@ -4,7 +4,6 @@ require "rnn"
 require "SeqBLMGRU"
 require "vecLookup"
 require "maskZerovecLookup"
-require "SwapTable"
 require "ASequencerCriterion"
 
 function getnn()
@@ -16,7 +15,7 @@ function getnn()
 	local clsmod=nn.Sequencer(nn.MaskZero(nn.Sequential():add(nn.Linear(nfeature,nhidden)):add(nn.Tanh()):add(nn.Linear(nhidden,nclass)),1));
 
 	local nnmodi=nn.Sequential():add(coremod):add(nn.SplitTable(1)):add(clsmod);
-	local nnmod=nn.Sequential():add(id2vec):add(nn.ConcatTable():add(nnmodi):add(nn.SplitTable(1))):add(nn.SwapTable())
+	local nnmod=nn.Sequential():add(id2vec):add(nn.ConcatTable():add(nnmodi):add(nn.SplitTable(1))):add(nn.ZipTable())
 
 	return nnmod
 end
