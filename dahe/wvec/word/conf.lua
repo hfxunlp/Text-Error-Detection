@@ -12,4 +12,4 @@ csave=3
 nfeature=256*2
 nhidden=nfeature
 nclass=256
-lrdecaycycle=8
+lrdecaycycle=16

@@ -22,12 +22,10 @@ function loadnt(iprefix,ifafix,nfile,ntotal)
 end
 
 function rldc()
-	local apin,aptar=loadnt('datasrc/thd/train','i.asc',nfresh,nsam)
+	local apin=loadnt('datasrc/thd/train','i.asc',nfresh,nsam)
 	for _tmpi=1,nfresh do
 		table.remove(mword,1)
 		table.insert(mword,table.remove(apin))
-		table.remove(mwordt,1)
-		table.insert(mwordt,table.remove(aptar))
 		table.remove(colid,table.remove(colidx,1))
 	end
 end

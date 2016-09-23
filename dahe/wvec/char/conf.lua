@@ -12,4 +12,4 @@ csave=3
 nfeature=512*2
 nhidden=nfeature
 nclass=512
-lrdecaycycle=8
+lrdecaycycle=16

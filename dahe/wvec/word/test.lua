@@ -49,7 +49,6 @@ end
 function wrs(fname,tt)
 	local file=io.open(fname,"w")
 	for _,v in ipairs(tt) do
-		file:write(v.." ")
 		for __,vwrt in ipairs(v) do
 			file:write(vwrt.." ")
 		end
