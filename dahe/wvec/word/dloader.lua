@@ -5,4 +5,4 @@ sizvec=wvec:size(2)
 
 colid={}
 colidx={}
-mword,mwordt=loadnt('datasrc/thd/train','i.asc',tld,nsam)
+mword=loadnt('datasrc/thd/train','i.asc',tld,nsam)

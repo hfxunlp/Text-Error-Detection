@@ -35,8 +35,10 @@ function grs(modin,inputdata)
 	for i,v in ipairs(inputdata) do
 		local rs=modin:forward(torch.Tensor(v):resize(#v,1))
 		local tmpt={}
-		for _,sequ in rs do
+		for _,sequ in ipairs(rs) do
 			v1,v2=unpack(sequ)
+			v1:resize(v1:size(2))
+			v2:resize(v2:size(2))
 			table.insert(tmpt,v1:dot(v2)/(v1:norm()*v2:norm()))
 		end
 		table.insert(rst,tmpt)
