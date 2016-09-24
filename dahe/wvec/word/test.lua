@@ -57,8 +57,23 @@ function wrs(fname,tt)
 	file:close()
 end
 
+function saveObject(fname,objWrt)
+	local tmpod=nil
+	if not torch.isTensor(objWrt) then
+		tmpod=nn.Serial(objWrt)
+		tmpod:lightSerial()
+	else
+		tmpod=objWrt
+	end
+	local file=torch.DiskFile(fname,'w')
+	file:writeObject(tmpod)
+	file:close()
+end
+
 print("load module")
 tmod=loadObject("modrs/nnmod2.asc")
+--print("Serail and save model")
+--saveObject("nnmodts.asc",tmod)
 tmod:evaluate()
 print("load test")
 td=ldtt("datasrc/tlua.txt")
