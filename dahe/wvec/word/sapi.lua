@@ -2,7 +2,7 @@ function saveObject(fname,objWrt)
 	local tmpod=nil
 	if not torch.isTensor(objWrt) then
 		tmpod=nn.Serial(objWrt)
-		tmpod:lightSerial()
+		tmpod:mediumSerial()
 	else
 		tmpod=objWrt
 	end

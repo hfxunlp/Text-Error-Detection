@@ -5,7 +5,6 @@ require "SeqBLMGRU"
 require "SeqDropout"
 require "vecLookup"
 require "maskZerovecLookup"
-require "nngraph"
 require "getgcnn"
 require "ASequencerCriterion"
 
